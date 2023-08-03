@@ -22,3 +22,8 @@ func ConvertToTimeZone(utcTime time.Time, timeZone string) (time.Time, error) {
 	}
 	return utcTime.In(loc), nil
 }
+
+func CurrentTime(funcTime func() time.Time) string {
+	timeIs := funcTime()
+	return timeIs.String()
+}

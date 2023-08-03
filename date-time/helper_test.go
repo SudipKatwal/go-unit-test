@@ -1,6 +1,7 @@
 package datetime
 
 import (
+	"strings"
 	"testing"
 	"time"
 )
@@ -67,5 +68,20 @@ func TestConvertToTimeZone(t *testing.T) {
 		} else if !tc.isError && !result.Equal(tc.expected) {
 			t.Errorf("Expected %v, but got %v for time zone %s", tc.expected, result, tc.timeZone)
 		}
+	}
+}
+
+func TestCurrentTime(t *testing.T) {
+	mockNow := func() time.Time {
+		fakeTime, _ := time.Parse(time.RFC3339, "2021-01-08T15:04:05Z")
+		return fakeTime
+	}
+
+	// When
+	ct := CurrentTime(mockNow)
+
+	expected := "2021-01-08 15:04:05 +0000 UTC"
+	if !strings.EqualFold(ct, expected) {
+		t.Errorf("Expected %v, but got %v for time", expected, ct)
 	}
 }
